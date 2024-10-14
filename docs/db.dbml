@@ -1,0 +1,103 @@
+// Copy this text, paste to https://dbdiagram.io/d
+// Or, https://databasediagram.com/app
+
+Table Category {
+    id INTEGER [primary key]
+    name VARCHAR 
+    }
+
+Table Customer {
+    id INTEGER [primary key]
+    name VARCHAR 
+    email VARCHAR 
+    }
+
+Table Employee {
+    id INTEGER [primary key]
+    name VARCHAR 
+    restaurant_id INTEGER 
+    role VARCHAR 
+    email VARCHAR 
+    }
+
+Table Restaurant {
+    id INTEGER [primary key]
+    name VARCHAR 
+    location VARCHAR 
+    }
+
+Table MenuItem {
+    id INTEGER [primary key]
+    name VARCHAR 
+    description TEXT 
+    price FLOAT 
+    photo VARCHAR 
+    category_id INTEGER 
+    restaurant_id INTEGER 
+    }
+
+Table MenuItemPromotion {
+    id INTEGER [primary key]
+    menu_item_id INTEGER 
+    promotion_id INTEGER 
+    }
+
+Table Promotion {
+    id INTEGER [primary key]
+    name VARCHAR 
+    discount_percentage FLOAT 
+    start_date DATETIME 
+    end_date DATETIME 
+    }
+
+Table MenuItemSupplier {
+    id INTEGER [primary key]
+    menu_item_id INTEGER 
+    supplier_id INTEGER 
+    }
+
+Table Supplier {
+    id INTEGER [primary key]
+    name VARCHAR 
+    contact_info VARCHAR 
+    }
+
+Table Order {
+    id INTEGER [primary key]
+    customer_id INTEGER 
+    restaurant_id INTEGER 
+    order_date DATETIME 
+    }
+
+Table OrderItem {
+    id INTEGER [primary key]
+    order_id INTEGER 
+    menu_item_id INTEGER 
+    quantity INTEGER 
+    }
+
+Table Review {
+    id INTEGER [primary key]
+    customer_id INTEGER 
+    menu_item_id INTEGER 
+    review_text TEXT 
+    rating INTEGER 
+    review_date DATETIME 
+    }
+
+
+
+// Relationships
+    Ref: Employee.(restaurant_id) < Restaurant.(id)
+    Ref: MenuItem.(category_id) < Category.(id)
+    Ref: MenuItem.(restaurant_id) < Restaurant.(id)
+    Ref: MenuItemPromotion.(menu_item_id) < MenuItem.(id)
+    Ref: MenuItemPromotion.(promotion_id) < Promotion.(id)
+    Ref: MenuItemSupplier.(menu_item_id) < MenuItem.(id)
+    Ref: MenuItemSupplier.(supplier_id) < Supplier.(id)
+    Ref: Order.(customer_id) < Customer.(id)
+    Ref: Order.(restaurant_id) < Restaurant.(id)
+    Ref: OrderItem.(menu_item_id) < MenuItem.(id)
+    Ref: OrderItem.(order_id) < Order.(id)
+    Ref: Review.(customer_id) < Customer.(id)
+    Ref: Review.(menu_item_id) < MenuItem.(id)

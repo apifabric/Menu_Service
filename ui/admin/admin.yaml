@@ -1,0 +1,349 @@
+about:
+  date: October 14, 2024 17:24:39
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+info:
+  number_relationships: 13
+  number_tables: 12
+info_toggle_checked: true
+resources:
+  Category:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: id
+    description: Table to store categories of menu items (e.g., appetizer, chicken,
+      etc.).
+    info_list: Table to store categories of menu items (e.g., appetizer, chicken,
+      etc.).
+    tab_groups:
+    - direction: tomany
+      fks:
+      - category_id
+      name: MenuItemList
+      resource: MenuItem
+    type: Category
+    user_key: name
+  Customer:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: email
+    - name: id
+    description: Table to store customer information.
+    info_list: Table to store customer information.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - customer_id
+      name: OrderList
+      resource: Order
+    - direction: tomany
+      fks:
+      - customer_id
+      name: ReviewList
+      resource: Review
+    type: Customer
+    user_key: name
+  Employee:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: restaurant_id
+    - name: role
+    - name: email
+    - name: id
+    description: Table to store restaurant employees.
+    info_list: Table to store restaurant employees.
+    tab_groups:
+    - direction: toone
+      fks:
+      - restaurant_id
+      name: restaurant
+      resource: Restaurant
+    type: Employee
+    user_key: name
+  MenuItem:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: category_id
+    - name: restaurant_id
+    - name: description
+    - name: price
+      required: true
+    - name: photo
+    - name: id
+    description: Table to store menu items including photo, price, and description.
+    info_list: Table to store menu items including photo, price, and description.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - menu_item_id
+      name: MenuItemPromotionList
+      resource: MenuItemPromotion
+    - direction: tomany
+      fks:
+      - menu_item_id
+      name: MenuItemSupplierList
+      resource: MenuItemSupplier
+    - direction: tomany
+      fks:
+      - menu_item_id
+      name: OrderItemList
+      resource: OrderItem
+    - direction: tomany
+      fks:
+      - menu_item_id
+      name: ReviewList
+      resource: Review
+    - direction: toone
+      fks:
+      - category_id
+      name: category
+      resource: Category
+    - direction: toone
+      fks:
+      - restaurant_id
+      name: restaurant
+      resource: Restaurant
+    type: MenuItem
+    user_key: name
+  MenuItemPromotion:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: menu_item_id
+    - name: promotion_id
+    description: Table to map menu items to promotions.
+    info_list: Table to map menu items to promotions.
+    tab_groups:
+    - direction: toone
+      fks:
+      - menu_item_id
+      name: menu_item
+      resource: MenuItem
+    - direction: toone
+      fks:
+      - promotion_id
+      name: promotion
+      resource: Promotion
+    type: MenuItemPromotion
+    user_key: id
+  MenuItemSupplier:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: menu_item_id
+    - name: supplier_id
+    description: Table to map menu items to suppliers.
+    info_list: Table to map menu items to suppliers.
+    tab_groups:
+    - direction: toone
+      fks:
+      - menu_item_id
+      name: menu_item
+      resource: MenuItem
+    - direction: toone
+      fks:
+      - supplier_id
+      name: supplier
+      resource: Supplier
+    type: MenuItemSupplier
+    user_key: id
+  Order:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: customer_id
+    - name: restaurant_id
+    - name: order_date
+    description: Table to store customer orders.
+    info_list: Table to store customer orders.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - order_id
+      name: OrderItemList
+      resource: OrderItem
+    - direction: toone
+      fks:
+      - customer_id
+      name: customer
+      resource: Customer
+    - direction: toone
+      fks:
+      - restaurant_id
+      name: restaurant
+      resource: Restaurant
+    type: Order
+    user_key: id
+  OrderItem:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: menu_item_id
+    - name: order_id
+    - name: quantity
+      required: true
+    description: Table to store items within orders.
+    info_list: Table to store items within orders.
+    tab_groups:
+    - direction: toone
+      fks:
+      - menu_item_id
+      name: menu_item
+      resource: MenuItem
+    - direction: toone
+      fks:
+      - order_id
+      name: order
+      resource: Order
+    type: OrderItem
+    user_key: id
+  Promotion:
+    attributes:
+    - label: ' name*'
+      name: name
+      search: true
+      sort: true
+    - name: discount_percentage
+    - name: start_date
+    - name: end_date
+    - name: id
+    description: Table to store promotional offers.
+    info_list: Table to store promotional offers.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - promotion_id
+      name: MenuItemPromotionList
+      resource: MenuItemPromotion
+    type: Promotion
+    user_key: name
+  Restaurant:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: location
+    - name: id
+    description: Table to store information about different restaurants.
+    info_list: Table to store information about different restaurants.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - restaurant_id
+      name: EmployeeList
+      resource: Employee
+    - direction: tomany
+      fks:
+      - restaurant_id
+      name: MenuItemList
+      resource: MenuItem
+    - direction: tomany
+      fks:
+      - restaurant_id
+      name: OrderList
+      resource: Order
+    type: Restaurant
+    user_key: name
+  Review:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: customer_id
+    - name: menu_item_id
+    - name: review_text
+    - name: rating
+    - name: review_date
+    description: Table to store customer reviews for menu items.
+    info_list: Table to store customer reviews for menu items.
+    tab_groups:
+    - direction: toone
+      fks:
+      - customer_id
+      name: customer
+      resource: Customer
+    - direction: toone
+      fks:
+      - menu_item_id
+      name: menu_item
+      resource: MenuItem
+    type: Review
+    user_key: id
+  Supplier:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: contact_info
+    - name: id
+    description: Table to store suppliers for menu items.
+    info_list: Table to store suppliers for menu items.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - supplier_id
+      name: MenuItemSupplierList
+      resource: MenuItemSupplier
+    type: Supplier
+    user_key: name
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    detail_mode: tab
+    edit_on_mode: dblclick
+    include_translation: 'false'
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    new_mode: dialog
+    pick_style: list
+    row_height: small,
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: 'false'

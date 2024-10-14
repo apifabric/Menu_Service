@@ -1,0 +1,49 @@
+<o-form-layout-manager attr="MenuItemPromotion" mode="tab" title="MENUITEMPROMOTION">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="MenuItemPromotionTable" 
+            service="MenuItemPromotion" 
+            entity="MenuItemPromotion" 
+            title="MENUITEMPROMOTION"
+            keys="id"
+            columns="id;menu_item_id;promotion_id" 
+            header-actions="R;D"
+            visible-columns="id;menu_item_id;promotion_id"  
+            sort-columns="id" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-column attr="menu_item_id" title="menu_item_id">
+    <o-table-cell-renderer-service attr="menu_item_id" 
+        service="MenuItem" entity="MenuItemType" columns="id;name"
+        parent-keys="id:menu_item_id"
+        value-column="name" keys="menu_item_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column attr="promotion_id" title="promotion_id">
+    <o-table-cell-renderer-service attr="promotion_id" 
+        service="Promotion" entity="PromotionType" columns="id;name"
+        parent-keys="id:promotion_id"
+        value-column="name" keys="promotion_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>
